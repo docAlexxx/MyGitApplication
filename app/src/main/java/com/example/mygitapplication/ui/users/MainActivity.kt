@@ -1,19 +1,19 @@
 package com.example.mygitapplication.ui.users
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mygitapplication.R
-import com.example.mygitapplication.model.UserRepo
-import com.example.mygitapplication.data.UserRepoImpl
+import com.example.mygitapplication.app
 import com.example.mygitapplication.databinding.ActivityMainBinding
+import com.example.mygitapplication.model.UserRepo
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private val adapter = UserAdapter()
-    private val userRepo: UserRepo = UserRepoImpl()
+    private val userRepo: UserRepo by lazy { app.userRepo }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
