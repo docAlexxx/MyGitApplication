@@ -1,7 +1,8 @@
-package com.example.mygitapplication
+package com.example.mygitapplication.ui.users
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.mygitapplication.model.User
 
 class UserAdapter : RecyclerView.Adapter<UserViewHolder>() {
     private val data = mutableListOf<User>()

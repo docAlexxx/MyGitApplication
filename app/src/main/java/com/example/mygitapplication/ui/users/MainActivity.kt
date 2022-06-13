@@ -1,9 +1,12 @@
-package com.example.mygitapplication
+package com.example.mygitapplication.ui.users
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.mygitapplication.R
+import com.example.mygitapplication.model.UserRepo
+import com.example.mygitapplication.data.UserRepoImpl
 import com.example.mygitapplication.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {

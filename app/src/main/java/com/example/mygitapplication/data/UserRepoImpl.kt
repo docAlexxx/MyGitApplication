@@ -1,9 +1,11 @@
-package com.example.mygitapplication
+package com.example.mygitapplication.data
 
 import android.os.Handler
 import android.os.Looper
+import com.example.mygitapplication.model.User
+import com.example.mygitapplication.model.UserRepo
 
-class UserRepoImpl:UserRepo {
+class UserRepoImpl: UserRepo {
     private val DATA_LOADING_DELAY = 1000L
 
     private val userData: List<User> = listOf(

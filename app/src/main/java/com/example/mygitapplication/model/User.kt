@@ -1,4 +1,4 @@
-package com.example.mygitapplication
+package com.example.mygitapplication.model
 
 data class User(
     val login: String,

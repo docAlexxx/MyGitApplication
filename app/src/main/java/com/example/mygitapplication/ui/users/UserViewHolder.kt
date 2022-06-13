@@ -1,9 +1,11 @@
-package com.example.mygitapplication
+package com.example.mygitapplication.ui.users
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
+import com.example.mygitapplication.R
+import com.example.mygitapplication.model.User
 import com.example.mygitapplication.databinding.UserItemBinding
 
 class UserViewHolder(parent: ViewGroup) : RecyclerView.ViewHolder(

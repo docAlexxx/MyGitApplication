@@ -1,4 +1,4 @@
-package com.example.mygitapplication
+package com.example.mygitapplication.model
 
 interface UserRepo {
     fun getUsers(
