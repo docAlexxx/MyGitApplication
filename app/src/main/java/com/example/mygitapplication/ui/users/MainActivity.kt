@@ -3,6 +3,7 @@ package com.example.mygitapplication.ui.users
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mygitapplication.R
 import com.example.mygitapplication.model.UserRepo
@@ -20,6 +21,12 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        initViews()
+
+    }
+
+    private fun initViews() {
+        showProgressBar(false)
         initRefreshButton()
         initRecyclerView()
     }
@@ -28,15 +35,25 @@ class MainActivity : AppCompatActivity() {
         binding.userListRecyclerView.layoutManager = LinearLayoutManager(this)
         binding.userListRecyclerView.adapter = adapter
     }
+
     private fun initRefreshButton() {
         binding.refreshButton.setOnClickListener {
-
+            showProgressBar(true)
             userRepo.getUsers(
-                onSuccess = adapter::setData,
+                onSuccess = {
+                    showProgressBar(false)
+                    adapter.setData(it)
+                },
                 onError = {
+                    showProgressBar(false)
                     Toast.makeText(this, it.message, Toast.LENGTH_SHORT).show()
                 }
             )
         }
+    }
+
+    private fun showProgressBar(isLoading: Boolean) {
+        binding.progressBar.isVisible = isLoading
+        binding.userListRecyclerView.isVisible = !isLoading
     }
 }
