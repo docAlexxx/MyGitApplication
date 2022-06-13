@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="refresh_button_margin">40dp</dimen>
+    <dimen name="user_list_rv_margin">10dp</dimen>
+</resources>
