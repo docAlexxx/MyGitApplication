@@ -1,15 +1,34 @@
 package com.example.mygitapplication.ui.users
 
-class UserPresenter:UserContract.Presenter {
+import com.example.mygitapplication.model.UserRepo
+
+class UserPresenter(private val userRepo: UserRepo):UserContract.Presenter {
+
+    private var view: UserContract.View? = null
+
     override fun attach(view: UserContract.View) {
-        TODO("Not yet implemented")
+        this.view = view
     }
 
     override fun detach() {
-        TODO("Not yet implemented")
+        view = null
     }
 
     override fun onRefresh() {
-        TODO("Not yet implemented")
+        loadData()
+    }
+
+    private fun loadData() {
+        view?.showProgressBar(true)
+        userRepo.getUsers(
+            onSuccess = {
+                view?.showProgressBar(false)
+                view?.showUsers(it)
+            },
+            onError = {
+                view?.showProgressBar(false)
+                view?.showError(it)
+            }
+        )
     }
 }

@@ -14,8 +14,6 @@ import com.example.mygitapplication.model.UserRepo
 class MainActivity : AppCompatActivity(), UserContract.View {
     private lateinit var binding: ActivityMainBinding
     private val adapter = UserAdapter()
-    private val userRepo: UserRepo by lazy { app.userRepo }
-
     private lateinit var presenter: UserContract.Presenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,6 +23,7 @@ class MainActivity : AppCompatActivity(), UserContract.View {
         setContentView(binding.root)
 
         initViews()
+        presenter = UserPresenter(app.userRepo)
         presenter.attach(this)
 
     }
@@ -47,18 +46,7 @@ class MainActivity : AppCompatActivity(), UserContract.View {
 
     private fun initRefreshButton() {
         binding.refreshButton.setOnClickListener {
-
-            showProgressBar(true)
-            userRepo.getUsers(
-                onSuccess = {
-                    showProgressBar(false)
-                    showUsers(it)
-                },
-                onError = {
-                    showProgressBar(false)
-                    showError(it)
-                }
-            )
+           presenter.onRefresh()
         }
     }
 
