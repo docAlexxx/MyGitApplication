@@ -9,7 +9,6 @@ import com.example.mygitapplication.R
 import com.example.mygitapplication.app
 import com.example.mygitapplication.databinding.ActivityMainBinding
 import com.example.mygitapplication.model.User
-import com.example.mygitapplication.model.UserRepo
 
 class MainActivity : AppCompatActivity(), UserContract.View {
     private lateinit var binding: ActivityMainBinding
@@ -23,7 +22,7 @@ class MainActivity : AppCompatActivity(), UserContract.View {
         setContentView(binding.root)
 
         initViews()
-        presenter = UserPresenter(app.userRepo)
+        presenter = extractPresenter()
         presenter.attach(this)
 
     }
@@ -46,7 +45,7 @@ class MainActivity : AppCompatActivity(), UserContract.View {
 
     private fun initRefreshButton() {
         binding.refreshButton.setOnClickListener {
-           presenter.onRefresh()
+            presenter.onRefresh()
         }
     }
 
@@ -61,5 +60,14 @@ class MainActivity : AppCompatActivity(), UserContract.View {
 
     override fun showError(throwable: Throwable) {
         Toast.makeText(this, throwable.message, Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onRetainCustomNonConfigurationInstance(): UserContract.Presenter {
+        return presenter
+    }
+
+    private fun extractPresenter(): UserContract.Presenter {
+        return lastCustomNonConfigurationInstance as? UserContract.Presenter
+            ?: UserPresenter(app.userRepo)
     }
 }
