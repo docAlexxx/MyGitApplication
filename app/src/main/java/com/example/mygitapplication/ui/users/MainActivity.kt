@@ -46,7 +46,7 @@ class MainActivity : AppCompatActivity() {
                 },
                 onError = {
                     showProgressBar(false)
-                    Toast.makeText(this, it.message, Toast.LENGTH_SHORT).show()
+                    showError(it)
                 }
             )
         }
@@ -55,5 +55,9 @@ class MainActivity : AppCompatActivity() {
     private fun showProgressBar(isLoading: Boolean) {
         binding.progressBar.isVisible = isLoading
         binding.userListRecyclerView.isVisible = !isLoading
+    }
+
+    fun showError(throwable: Throwable) {
+        Toast.makeText(this, throwable.message, Toast.LENGTH_SHORT).show()
     }
 }
