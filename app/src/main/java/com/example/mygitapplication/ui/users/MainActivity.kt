@@ -8,12 +8,15 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mygitapplication.R
 import com.example.mygitapplication.app
 import com.example.mygitapplication.databinding.ActivityMainBinding
+import com.example.mygitapplication.model.User
 import com.example.mygitapplication.model.UserRepo
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), UserContract.View {
     private lateinit var binding: ActivityMainBinding
     private val adapter = UserAdapter()
     private val userRepo: UserRepo by lazy { app.userRepo }
+
+    private lateinit var presenter: UserContract.Presenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,7 +25,13 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         initViews()
+        presenter.attach(this)
 
+    }
+
+    override fun onDestroy() {
+        presenter.detach()
+        super.onDestroy()
     }
 
     private fun initViews() {
@@ -38,11 +47,12 @@ class MainActivity : AppCompatActivity() {
 
     private fun initRefreshButton() {
         binding.refreshButton.setOnClickListener {
+
             showProgressBar(true)
             userRepo.getUsers(
                 onSuccess = {
                     showProgressBar(false)
-                    adapter.setData(it)
+                    showUsers(it)
                 },
                 onError = {
                     showProgressBar(false)
@@ -52,12 +62,16 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun showProgressBar(isLoading: Boolean) {
+    override fun showUsers(users: List<User>) {
+        adapter.setData(users)
+    }
+
+    override fun showProgressBar(isLoading: Boolean) {
         binding.progressBar.isVisible = isLoading
         binding.userListRecyclerView.isVisible = !isLoading
     }
 
-    fun showError(throwable: Throwable) {
+    override fun showError(throwable: Throwable) {
         Toast.makeText(this, throwable.message, Toast.LENGTH_SHORT).show()
     }
 }

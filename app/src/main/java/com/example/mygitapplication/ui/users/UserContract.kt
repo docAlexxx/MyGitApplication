@@ -6,7 +6,7 @@ interface UserContract {
 
     interface View {
         fun showUsers(users: List<User>)
-        fun showProgress(inProgress: Boolean)
+        fun showProgressBar(inProgress: Boolean)
         fun showError(throwable: Throwable)
     }
 
